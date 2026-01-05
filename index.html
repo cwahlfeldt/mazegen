@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maze Foundry</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+    <main class="app">
+      <header class="hero">
+        <p class="eyebrow">Procedural Paths</p>
+        <h1>Maze Foundry</h1>
+        <p class="subtitle">
+          Forge a fresh labyrinth with every click. Tune the grid, then watch
+          the corridors ignite.
+        </p>
+      </header>
+
+      <aside class="controls" aria-label="Maze controls">
+        <div class="ControlBox">
+          <div class="ShapeSection">
+            <label for="ShapeDropDownList" id="ShapeLabel">Shape:</label>
+            <select name="ShapeDropDownList" id="ShapeDropDownList">
+              <option selected="selected" value="1">Rectangular</option>
+              <option value="2">Circular</option>
+              <option value="3">Triangular</option>
+              <option value="4">Hexagonal</option>
+            </select>
+          </div>
+          <div class="Settings">
+            <div class="SettingRow">
+              <label for="S1TesselationDropDownList" class="SettingLabel">Style:</label>
+              <div class="SettingValue">
+                <select
+                  name="S1TesselationDropDownList"
+                  id="S1TesselationDropDownList"
+                >
+                  <option value="1">Orthogonal (Square cells)</option>
+                  <option selected="selected" value="2">
+                    Sigma (Hexagonal cells)
+                  </option>
+                  <option value="3">Delta (Triangular cells)</option>
+                </select>
+              </div>
+            </div>
+            <div class="SettingRow">
+              <label for="S1WidthTextBox" class="SettingLabel">Width:</label>
+              <div class="SettingValue">
+                <input
+                  name="S1WidthTextBox"
+                  type="text"
+                  value="31"
+                  maxlength="5"
+                  id="S1WidthTextBox"
+                  class="NumberInput"
+                />
+                <span class="SettingHint">(5 to 51 cells)</span>
+              </div>
+            </div>
+            <div class="SettingRow">
+              <label for="S1HeightTextBox" class="SettingLabel">Height:</label>
+              <div class="SettingValue">
+                <input
+                  name="S1HeightTextBox"
+                  type="text"
+                  value="21"
+                  maxlength="5"
+                  id="S1HeightTextBox"
+                  class="NumberInput"
+                />
+                <span class="SettingHint">(5 to 51 cells)</span>
+              </div>
+            </div>
+          </div>
+          <div class="ButtonSection">
+            <button id="GenerateButton" class="primary">Generate new</button>
+            <button id="AnimateButton" class="ghost">Animate build</button>
+          </div>
+        </div>
+
+        <div id="MazeDetails" class="ControlBox">
+          <h2 id="MazeHeader">Maze preview</h2>
+          <div class="LeftSection">
+            <input
+              id="ShowSolutionCheckBox"
+              type="checkbox"
+              name="ShowSolutionCheckBox"
+            />
+            <label for="ShowSolutionCheckBox">Solution</label>
+            <input
+              id="ShowAsLinesCheckBox"
+              type="checkbox"
+              name="ShowAsLinesCheckBox"
+            />
+            <label for="ShowAsLinesCheckBox">As lines</label>
+          </div>
+          <div class="RightSection">
+            <select name="FileFormatSelectorList" id="FileFormatSelectorList">
+              <option value="1">PDF (A4 size)</option>
+              <option value="2">PDF (A3 size)</option>
+              <option value="3">PDF (A2 size)</option>
+              <option value="4">PDF (Letter size)</option>
+              <option value="5">PDF (Legal size)</option>
+              <option value="6">PDF (Tabloid size)</option>
+              <option value="7">SVG</option>
+              <option value="8">SVG (with solution)</option>
+              <option selected="selected" value="9">PNG</option>
+              <option value="10">PNG (with solution)</option>
+            </select>
+            <button id="DownloadFileButton" class="ghost">Download</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="stage">
+        <svg
+          id="maze"
+          width="800"
+          height="500"
+          viewBox="0 0 800 500"
+          role="img"
+          aria-label="Maze preview"
+          xmlns="http://www.w3.org/2000/svg"
+        ></svg>
+        <div class="legend">
+          <div class="chip">Start</div>
+          <div class="chip chip-end">End</div>
+          <div class="legend-actions">
+            <button id="prev" class="ghost">Previous Maze</button>
+            <button id="next" class="ghost">Next Maze</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Depth-first carve, single-solution paths.</span>
+      </footer>
+    </main>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

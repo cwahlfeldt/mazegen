@@ -1,0 +1,341 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Code+Pro:wght@400;600&display=swap");
+
+:root {
+  color-scheme: light;
+  --bg: #f6f1e9;
+  --bg-deep: #efe4d5;
+  --ink: #1d1b18;
+  --accent: #d6452c;
+  --accent-soft: rgba(214, 69, 44, 0.15);
+  --panel: rgba(255, 255, 255, 0.85);
+  --panel-border: rgba(29, 27, 24, 0.12);
+  --shadow: 0 24px 60px rgba(28, 22, 16, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 15% 20%, #ffd8b8 0%, var(--bg) 45%),
+    linear-gradient(140deg, #fef7ef 0%, var(--bg-deep) 55%, #f7e7d0 100%);
+  color: var(--ink);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
+  overflow: hidden;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(var(--accent-soft) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "hero hero"
+    "controls stage"
+    "footer stage";
+  gap: 24px;
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  grid-area: hero;
+  text-align: left;
+}
+
+.eyebrow {
+  font-family: "Source Code Pro", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 12px;
+  color: rgba(29, 27, 24, 0.6);
+}
+
+h1 {
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  letter-spacing: -0.04em;
+  margin: 12px 0 8px;
+}
+
+.subtitle {
+  max-width: 560px;
+  font-size: 1.05rem;
+  color: rgba(29, 27, 24, 0.78);
+}
+
+.controls {
+  grid-area: controls;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  /* background: var(--panel); */
+  /* border: 1px solid var(--panel-border); */
+  padding: 18px;
+  border-radius: 18px;
+  /* box-shadow: var(--shadow); */
+  backdrop-filter: blur(12px);
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.ControlBox {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.ShapeSection {
+  display: grid;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.Settings {
+  display: grid;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.SettingRow {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.SettingLabel {
+  font-weight: 600;
+  padding-top: 10px;
+  text-align: left;
+}
+
+.SettingValue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.SettingHint {
+  color: rgba(29, 27, 24, 0.6);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.NumberInput {
+  width: 50px;
+  flex-shrink: 0;
+}
+
+.Settings input,
+.Settings select,
+.ShapeSection select {
+  font: inherit;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.Settings select {
+  width: 100%;
+  min-width: 0;
+}
+
+.ButtonSection {
+  display: grid;
+  gap: 10px;
+}
+
+#MazeDetails {
+  gap: 12px;
+}
+
+#MazeHeader {
+  font-size: 1.05rem;
+}
+
+.LeftSection,
+.RightSection {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  min-width: 0;
+}
+
+.RightSection {
+  justify-content: space-between;
+}
+
+.RightSection select {
+  flex: 1;
+  min-width: 0;
+}
+
+.RightSection button {
+  flex-shrink: 0;
+}
+
+button {
+  font: inherit;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: left;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(214, 69, 44, 0.35);
+}
+
+.ghost {
+  background: transparent;
+  border: 1px solid var(--panel-border);
+}
+
+.stage {
+  grid-area: stage;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#maze {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  border-radius: 22px;
+  /* background: #fff; */
+  /* box-shadow: var(--shadow); */
+  animation: rise 0.7s ease both;
+  display: block;
+  flex: 1;
+  min-height: 0;
+}
+
+.legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.legend-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.legend-actions button {
+  padding: 8px 12px;
+  border-radius: 12px;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(29, 27, 24, 0.08);
+}
+
+.chip-end {
+  background: rgba(214, 69, 44, 0.18);
+}
+
+.footer {
+  grid-area: footer;
+  font-size: 0.85rem;
+  color: rgba(29, 27, 24, 0.7);
+  align-self: start;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    padding: 0;
+  }
+
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "hero"
+      "controls"
+      "stage"
+      "footer";
+    grid-template-rows: auto auto 1fr auto;
+    padding: 18px;
+  }
+
+  .controls {
+    position: static;
+  }
+
+  button {
+    width: 100%;
+    text-align: center;
+  }
+}
