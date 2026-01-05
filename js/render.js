@@ -474,7 +474,11 @@ export function animateBuild(svg, grid) {
 
 export function exportSvgToPng(svg, filename) {
   const serializer = new XMLSerializer();
-  const source = serializer.serializeToString(svg);
+  let source = serializer.serializeToString(svg);
+  // Ensure xmlns is present for proper rendering in Image element
+  if (!source.includes('xmlns="http://www.w3.org/2000/svg"')) {
+    source = source.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+  }
   const svgBlob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
   const url = URL.createObjectURL(svgBlob);
   const image = new Image();
@@ -488,7 +492,10 @@ export function exportSvgToPng(svg, filename) {
     raster.height = Math.round(height * scale);
     const ctx = raster.getContext("2d");
     ctx.scale(scale, scale);
-    ctx.drawImage(image, 0, 0);
+    // Fill white background since SVG has transparent background
+    ctx.fillStyle = "#fdfbf7";
+    ctx.fillRect(0, 0, width, height);
+    ctx.drawImage(image, 0, 0, width, height);
     URL.revokeObjectURL(url);
     const link = document.createElement("a");
     link.href = raster.toDataURL("image/png");

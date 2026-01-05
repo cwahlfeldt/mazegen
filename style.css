@@ -93,15 +93,13 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  /* background: var(--panel); */
-  /* border: 1px solid var(--panel-border); */
   padding: 18px;
   border-radius: 18px;
-  /* box-shadow: var(--shadow); */
   backdrop-filter: blur(12px);
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
+  justify-content: center;
 }
 
 .ControlBox {
@@ -297,7 +295,7 @@ button:hover {
 }
 
 .footer {
-  grid-area: footer;
+  /* grid-area: footer; */
   font-size: 0.85rem;
   color: rgba(29, 27, 24, 0.7);
   align-self: start;

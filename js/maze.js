@@ -143,7 +143,16 @@ function isBoundaryCell(cell, grid) {
     return cell.ring === grid.rows - 1;
   }
   const neighborDirs = new Set(cell.neighbors.map((neighbor) => neighbor.dir));
-  return Object.keys(cell.walls).some((key) => !neighborDirs.has(key));
+  const boundaryEdges = Object.keys(cell.walls).filter((key) => !neighborDirs.has(key));
+  if (!boundaryEdges.length) {
+    return false;
+  }
+  // For triangular grids, exclude cells where the only path into the maze
+  // is through a non-boundary edge (like the apex triangle)
+  if (grid.style === "delta" && cell.neighbors.length === 1) {
+    return false;
+  }
+  return true;
 }
 
 export function pickEndpoints(cells, grid) {
@@ -153,6 +162,18 @@ export function pickEndpoints(cells, grid) {
   }
   const boundary = active.filter((cell) => isBoundaryCell(cell, grid));
   const candidates = boundary.length ? boundary : active;
+
+  // For triangular shapes, start at apex (top) and end at bottom-right
+  if (state.shape === "triangular") {
+    const start = candidates.reduce((a, b) =>
+      b.y < a.y || (b.y === a.y && Math.abs(b.x) < Math.abs(a.x)) ? b : a
+    );
+    const end = candidates.reduce((a, b) =>
+      b.y > a.y || (b.y === a.y && b.x > a.x) ? b : a
+    );
+    return { start, end };
+  }
+
   const start = candidates.reduce((a, b) =>
     b.y < a.y || (b.y === a.y && b.x < a.x) ? b : a
   );
