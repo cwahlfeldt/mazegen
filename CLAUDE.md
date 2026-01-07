@@ -4,13 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Maze Foundry is a browser-based procedural maze generator that creates perfect mazes using depth-first carving. The application supports multiple grid types (orthogonal, hexagonal, triangular, polar) and shapes (rectangular, circular, triangular, hexagonal).
+Maze Generator is a browser-based procedural maze generator that creates perfect mazes using depth-first carving. The application supports multiple grid types (orthogonal, hexagonal, triangular, polar) and shapes (rectangular, circular, triangular, hexagonal).
 
 ## Development
 
 This is a vanilla JavaScript project with no build system or package manager. All development is done directly in the browser.
 
 **Running the application:**
+
 - Open [index.html](index.html) in a web browser
 - No server required for basic functionality
 - For local development, use any static file server (e.g., `python3 -m http.server`)
@@ -32,6 +33,7 @@ The codebase uses ES6 modules organized into single-responsibility files:
 ### Core Concepts
 
 **Grid Types (Tessellations):**
+
 - `orthogonal` - Square cells with 4-way connectivity
 - `sigma` - Hexagonal cells with 6-way connectivity
 - `delta` - Triangular cells with 3-way connectivity
@@ -42,6 +44,7 @@ Non-rectangular shapes (circular, triangular, hexagonal) are created by applying
 
 **Maze Generation:**
 Uses recursive backtracking (depth-first search) implemented in [carveMaze](js/maze.js:240). The algorithm:
+
 1. Starts from a random active cell
 2. Randomly selects unvisited neighbors
 3. Removes walls between current and chosen neighbor
@@ -50,6 +53,7 @@ Uses recursive backtracking (depth-first search) implemented in [carveMaze](js/m
 
 **Cell Data Structure:**
 Each cell contains:
+
 - Position coordinates (`x`, `y`, `r`, `c`)
 - `walls` object (structure varies by grid type)
 - `neighbors` array with direction and opposite wall information
@@ -57,9 +61,10 @@ Each cell contains:
 - Grid-type-specific properties (e.g., `isUp` for triangles, `ring` for polar)
 
 **Rendering Modes:**
+
 - Wall mode: Draws cell boundaries
 - Line mode: Draws passage centerlines
-Both modes are implemented in [render.js](js/render.js) with separate SVG path generation
+  Both modes are implemented in [render.js](js/render.js) with separate SVG path generation
 
 **History System:**
 Mazes are serialized and stored in LocalStorage (limit: 20). Users can navigate through previous/next mazes. See [storage.js](js/storage.js) for serialization format.
@@ -68,6 +73,7 @@ Mazes are serialized and stored in LocalStorage (limit: 20). Users can navigate 
 
 **Polar Grid Complexity:**
 Polar grids ([buildPolarGrid](js/grid.js:162)) have unique characteristics:
+
 - Cells in outer rings subdivide to maintain aspect ratio
 - `walls.outward` is an array (one per subdivided outer neighbor)
 - Center cell has no inward wall or rotational walls
@@ -88,6 +94,7 @@ The [removeWall](js/maze.js:89) function handles bidirectional wall removal. For
 The global `state` object in [state.js](js/state.js) is mutated directly. No immutability patterns are used.
 
 **Neighbor Traversal:**
+
 ```javascript
 for (const neighbor of cell.neighbors) {
   if (hasWall(cell, neighbor, grid)) continue;
